@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import error from '../../../public/error.gif'
+import error from '../../assets/error.gif'
 const ErrorPage = () => {
     return (
         <div className='relative'>
