@@ -2,7 +2,7 @@
 const SectionOne = () => {
     return (
         <div>
-            
+            erdfhb
         </div>
     );
 };

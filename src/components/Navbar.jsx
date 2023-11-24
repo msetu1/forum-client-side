@@ -10,7 +10,7 @@ const Navbar = () => {
             isPending
               ? "pending"
               : isActive
-              ? "text-xl font-bold underline underline-offset-2 text-[#dc2626]"
+              ? "text-2xl font-bold underline underline-offset-2 text-[#ea580c]"
               : ""
           }
         >
@@ -24,7 +24,7 @@ const Navbar = () => {
             isPending
               ? "pending"
               : isActive
-              ? "text-xl font-bold underline underline-offset-2 text-[#dc2626]"
+              ? "text-2xl font-bold underline underline-offset-2 text-[#ea580c]"
               : ""
           }
         >
@@ -68,11 +68,11 @@ const Navbar = () => {
                 src="https://i.ibb.co/kDyHy5C/logo.jpg"
                 alt=""
               />
-              <h1 className="font-bold text-3xl text-[#dc2626]">React Forum</h1>
+              <h1 className="font-bold text-3xl text-[#ea580c]">React Forum</h1>
             </div>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className=" flex items-center px-1 text-xl font-bold text-slate-600 space-x-5">
+            <ul className=" flex items-center px-1 text-2xl font-bold text-[#f1f5f9] space-x-5">
               {links}
             </ul>
           </div>
