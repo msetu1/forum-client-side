@@ -64,7 +64,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-5">
               <img
-                className="h-[90px] w-[100px] rounded-lg"
+                className="w-[80px] md:ml-8 lg:ml-20   h-[80px] rounded"
                 src="https://i.ibb.co/kDyHy5C/logo.jpg"
                 alt=""
               />
