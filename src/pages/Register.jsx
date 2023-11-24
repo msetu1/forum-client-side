@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import './register.css';
+import './login.css';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
