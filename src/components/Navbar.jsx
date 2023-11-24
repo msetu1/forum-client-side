@@ -37,7 +37,7 @@ const Navbar = () => {
     <>
       <div className="">
         <div className="navbar py-5 fixed z-10 max-w-7xl mx-auto">
-          <div className="navbar-start">
+          <div className="navbar-start text-white">
             <div className="dropdown">
               <label tabIndex={0} className="btn btn-ghost lg:hidden">
                 <svg
@@ -62,13 +62,17 @@ const Navbar = () => {
                 {links}
               </ul>
             </div>
-            <div className="flex items-center gap-5">
-              <img
-                className="w-[80px] md:ml-8 lg:ml-20   h-[80px] rounded"
-                src="https://i.ibb.co/kDyHy5C/logo.jpg"
-                alt=""
-              />
-              <h1 className="font-bold text-3xl text-[#ea580c]">React Forum</h1>
+            <div className="hidden lg:block">
+              <div className="flex  items-center gap-5">
+                <img
+                  className="w-[80px] md:ml-8 lg:ml-20   h-[80px] rounded"
+                  src="https://i.ibb.co/kDyHy5C/logo.jpg"
+                  alt=""
+                />
+                <h1 className="font-bold text-3xl text-[#ea580c]">
+                  React Forum
+                </h1>
+              </div>
             </div>
           </div>
           <div className="navbar-center hidden lg:flex">
