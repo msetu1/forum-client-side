@@ -1,104 +1,134 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import './login.css'
-import SocialLogin from './SocialLogin';
-import imglogo from '../../public/login.svg'
-import Swal from 'sweetalert2';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
-const Login = () => {
-  const {userLogin}=useContext(AuthContext)
-  const location = useLocation()
-    const navigate = useNavigate()
-  const handleLogin = e => {
-      e.preventDefault()
-      const form = new FormData(e.currentTarget);
-      const email = form.get('email')
-      const password = form.get('password')
-      console.log(email, password);
-     
-      // create user 
-      userLogin(email,password)
-      .then(result => {
-          console.log(result.user);
-          navigate(location?.state ? location.state : '/')
-          Swal.fire({
-              title: 'Success',
-              text: 'User Login successfully',
-              icon: 'success',
-              confirmButtonText: 'Ok'
-            })
-      })
-      .catch(error => {
-        console.error(error)
-        Swal.fire({
-          title: 'Error!',
-          text: 'Invalid email and password',
-          icon: 'error',
-          confirmButtonText: 'Ok'
-        })
-      })
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 
-  }
-  useEffect(()=>{
-    document.title="rf Study | Login"
-},[])
+// import { Helmet } from "react-helmet-async";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+
+const Login = () => {
+  const [disabled, setDisabled] = useState(true);
+    const {login}=useAuth()
+    const location =useLocation()
+    const navigate=useNavigate()
+  const from=location.state?.from?.pathname||"/"
+    useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    // logged in
+    login(email, password)
+    .then(result => {
+        console.log(result.user);
+        Swal.fire({
+            title: 'Success',
+            text: 'user Login Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+          navigate(from,{replace:true})
+      })
+      .catch(error=>{
+        console.error(error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Invalid Email and Password',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+      })
+  };
+  const handleValidate = (e) => {
+    const user_captcha_value =e.target.value;
+    if (validateCaptcha(user_captcha_value)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
   return (
-    <div className='min-h-screen bg-img bg-black'>
-      <div className='flex  items-center  pt-28 justify-between max-w-6xl mx-auto'>
-        <div className='lg:block hidden'>
-          <img className='' src={imglogo} alt="" />
-        </div>
-        <div className="ml-5 mr-20 lg:ml-0 my-20 lg:my-0">
-          <div className="rounded-xl ">
-            <div className="card w-full px-10 shadow-2xl bg-[#e0f2fe]">
-              <div>
-                <h1 className=" text-4xl mt-8 text-center font-bold">Please Login Now</h1>
+   <div className="bg-[#ecfdf5] min-h-screen">
+    {/* <Helmet>
+        <title>Bistro Boss | Login</title>
+   </Helmet> */}
+    <div className="max-w-7xl mx-auto pt-20">
+      <div className=" border border-black px-10 w-[500px] mx-auto  rounded-lg">
+       <form onSubmit={handleSubmit} className="card-body">
+       <div>
+                <h1 className=" text-4xl m5-8 mb-4 text-center font-bold">Please Login Now</h1>
               </div>
-              <form onSubmit={handleLogin} className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="email"
-                    className="input input-bordered" required />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                    className="input input-bordered" required />
-                  
-                </div>
-                <div className="form-control mt-6">
-                  <button type="submit" className="text-2xl font-semibold text-white px-16 py-3 bg-slate-800  hover:bg-[#015196] rounded-lg hover:rounded-full">Login</button>
-                </div>
-                <div>
-                <SocialLogin></SocialLogin>
-                </div>
-                <div className="text-center my-3">
-                  <h1 className="text-xl font-semibold">Dont have an account? <NavLink
-                    to="/register"
-                    className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "active" : "text-2xl text-orange-700 underline underline-offset-2 font-bold mx-2"
-                    }
-                  >
-                    Register
-                  </NavLink>
-                  </h1>
-                </div>
-              </form>
-            </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="email"
+              className="input input-bordered"
+              required
+            />
           </div>
-        </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <LoadCanvasTemplate />
+            </label>
+            <input
+              type="text"
+              name="captcha"
+              onBlur={handleValidate}
+              placeholder="type the captcha above "
+              className="input input-bordered"
+              
+            />
+            
+          </div>
+          <div className="form-control my-6">
+            <input
+              disabled={false}
+              className="btn btn-outline border-0 border-[#ea580c] border-b-4 text-xl font-bold"
+              type="submit"
+              value="Login"
+            />
+          </div>
+          <div>
+            <p className="text-center text-gray-600 text-xl">
+              Dont have an account? <Link
+                to="/register"
+                className="text-[#ea580c] font-bold text-2xl"
+              >
+                Register
+              </Link>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
+   </div>
   );
 };
 

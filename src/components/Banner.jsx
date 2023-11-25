@@ -3,7 +3,7 @@ const Banner = () => {
   return (
     <div className="banner-bg-img ">
       <div className="bg-opacity-70 w-full h-full bg-black">
-        <div className="flex flex-col items-center md:pt-48 pt-10 lg:pt-56">
+        <div className="flex flex-col items-center md:pt-48 pt-24 lg:pt-56">
           <h1 className="lg:text-7xl md:text-5xl text-4xl font-bold text-white">
             Welcome to the <span className="text-[#ea580c]">Forum</span>
           </h1>

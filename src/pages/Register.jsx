@@ -1,147 +1,163 @@
-import { NavLink } from 'react-router-dom';
-import './login.css';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
-import Swal from 'sweetalert2';
-
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+// import { Helmet } from "react-helmet-async";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
-    const {createUser}=useContext(AuthContext)
-    const handleRegister = e => {
-        e.preventDefault()
-        const form = new FormData(e.currentTarget);
-        const name = form.get('name')
-        const photo = form.get('photo')
-        const email = form.get('email')
-        const password = form.get('password')
-        console.log(name,photo,email, password);
-
-        // password validation 
-        if (password.length < 6) {
-            return Swal.fire({
-                title: 'Error!',
-                text: 'Please password must be at least 6 caracters',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-        }
-        else if (!/[A-Z]/.test(password)) {
-            return Swal.fire({
-                title: 'Error!',
-                text: 'Your password have at least one uper case charecters',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-            
-        }
-        else if (!/[a-z]/.test(password)) {
-           return Swal.fire({
-                title: 'Error!',
-                text: 'Your password have at least one lower case charecters',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-            
-        }
-
-        // create user 
-        createUser(email,password)
-        .then(result => {
-            console.log(result.user);
-            // navigate(location?.state ? location.state : '/')
+  const { createUser, updateUserProfile } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            console.log("user profile info update");
+            reset();
             Swal.fire({
-                title: 'Success',
-                text: 'User Register successfully',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-              })
-        })
-        .catch(error => {
+                title: "Success",
+                text: "User created successfully",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+          })
+          .catch((error) => {
             console.error(error);
             Swal.fire({
-                title: 'Error!',
-                text: 'Something went wrong!!',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
-        })
+                title: "Error!",
+                text: "Something went wrong!!",
+                icon: "error",
+                confirmButtonText: "Ok",
+              });
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    }
-    useEffect(()=>{
-        document.title="rf Study | Register"
-    },[])
-    return (
-        <div className='register-bg-img min-h-screen'>
-            <div className='pt-16 mx-5 lg:mx-0 pb-16 lg:pb-0'>
-                <div className="lg:max-w-[34%] mx-auto">
-                    <div className="rounded-xl">
-                        <div className="card w-full px-10 shadow-2xl bg-[#e0f2fe]">
-                            <div>
-                                <h1 className=" text-4xl mt-8 text-center font-bold">Please Register Now</h1>
-                            </div>
-                            <form onSubmit={handleRegister} className="card-body">
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Name</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Your Name"
-                                        className="input input-bordered" required />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Photo URL</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="photo"
-                                        placeholder="photo url"
-                                        className="input input-bordered" required />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Email</span>
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Your Email"
-                                        className="input input-bordered" required />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Password</span>
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        placeholder="Your Password"
-                                        className="input input-bordered" required />
-
-                                </div>
-                                <div className="form-control mt-6">
-                                    <button type="submit" className="text-2xl font-semibold text-white px-16 py-3 bg-slate-800  hover:bg-[#015196] rounded-lg hover:rounded-full">Register</button>
-                                </div>
-                                <div className="text-center my-3">
-                                    <h1 className="text-xl font-semibold">Already have an account? <NavLink
-                                        to="/login"
-                                        className={({ isActive, isPending }) =>
-                                            isPending ? "pending" : isActive ? "active" : "text-2xl text-orange-700 underline underline-offset-2 font-bold mx-2"
-                                        }
-                                    >
-                                        Login
-                                    </NavLink>
-                                    </h1>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="bg-[#ecfdf5] min-h-screen">
+      {/* <Helmet>
+        <title>Bistro Boss | Sign Up</title>
+      </Helmet> */}
+      <div className="max-w-7xl mx-auto pt-10 pb-4">
+        <div className=" border px-10 border-black rounded-lg w-[500px] mx-auto">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            <div>
+              <h1 className=" text-4xl mt-8 text-center font-bold">
+                Please Register Now
+              </h1>
             </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                {...register("name", { required: true })}
+                name="name"
+                placeholder="Your Name"
+                className="input input-bordered"
+                required
+              />
+              {errors.name && (
+                <span className="text-red-600">Name is required</span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                {...register("photoURL", { required: true })}
+                placeholder="photo url"
+                className="input input-bordered"
+                required
+              />
+              {errors.photoURL && (
+                <span className="text-red-600">photo URL is required</span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                {...register("email", { required: true })}
+                name="email"
+                placeholder="email"
+                className="input input-bordered"
+                required
+              />
+              {errors.email && (
+                <span className="text-red-600">Email is required</span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 20,
+                  pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* )/,
+                })}
+                name="password"
+                placeholder="password"
+                className="input input-bordered"
+                required
+              />
+              {errors.password?.type === "required" && (
+                <p className="text-red-600">Password is required</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-600">Password must be 6 characters</p>
+              )}
+              {errors.password?.type === "maxLength" && (
+                <p className="text-red-600">
+                  Password must be less then 20 characters
+                </p>
+              )}
+              {errors.password?.type === "pattern" && (
+                <p className="text-red-600">
+                  Password must have one uppercase one lowercase and one special
+                  characters
+                </p>
+              )}
+            </div>
+            <div className="form-control mt-6 mb-4">
+              <input
+                className="btn btn-outline border-0 text-xl font-bold border-[#ea580c] border-b-4 "
+                type="submit"
+                value="Sign Up"
+              />
+            </div>
+            <div>
+              <p className="text-center text-gray-600 text-xl">
+                Already have an account?{" "}
+                <Link to="/login" className="text-[#ea580c] font-bold text-2xl">
+                  Login
+                </Link>
+              </p>
+            </div>
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Register;

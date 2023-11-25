@@ -2,7 +2,7 @@
 const Membership = () => {
     return (
         <div>
-            
+            membership
         </div>
     );
 };
