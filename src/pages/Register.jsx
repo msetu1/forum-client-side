@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 // import { Helmet } from "react-helmet-async";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -18,24 +20,31 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         updateUserProfile(data.name, data.photoURL)
-          .then(() => {
+          .then(async () => {
+            const userInfo = {
+              name: data.name,
+              photoURL: data.photoURL,
+              email: data.email,
+            };
+            const res = await axiosPublic.post("/users", userInfo);
+            console.log(res.data);
             console.log("user profile info update");
             reset();
             Swal.fire({
-                title: "Success",
-                text: "User created successfully",
-                icon: "success",
-                confirmButtonText: "Ok",
-              });
+              title: "Success",
+              text: "User created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
           })
           .catch((error) => {
             console.error(error);
             Swal.fire({
-                title: "Error!",
-                text: "Something went wrong!!",
-                icon: "error",
-                confirmButtonText: "Ok",
-              });
+              title: "Error!",
+              text: "Something went wrong!!",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
           });
       })
       .catch((error) => {
@@ -63,7 +72,6 @@ const Register = () => {
               <input
                 type="text"
                 {...register("name", { required: true })}
-                name="name"
                 placeholder="Your Name"
                 className="input input-bordered"
                 required

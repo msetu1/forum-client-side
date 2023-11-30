@@ -8,6 +8,9 @@ import Icon from "../pages/Icon";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateProvider from "../providers/PrivateProvider";
+import MyProfile from "../dashboard/MyProfile";
+import MyPost from "../dashboard/MyPost";
+import AddPost from "../dashboard/AddPost";
 
 
 const router = createBrowserRouter([
@@ -21,12 +24,12 @@ const router = createBrowserRouter([
           element: <Home></Home>,
         },
         {
-          path: "/membership",
+          path: "membership",
           element:
             <Membership></Membership>
         },
         {
-          path: "/icon",
+          path: "icon",
           element:
             <PrivateProvider>
               <Icon></Icon>
@@ -35,14 +38,22 @@ const router = createBrowserRouter([
     ] 
     },
     {
-        path: "/dashboard",
+        path: "dashboard",
         element: <PrivateProvider>
           <Dashboard></Dashboard>
         </PrivateProvider>,
         children: [
           {
-            path: "",
-            element: <Home></Home>,
+            path: "myProfile",
+            element:<MyProfile></MyProfile>,
+          },
+          {
+            path: "addPost",
+            element:<AddPost></AddPost>,
+          },
+          {
+            path: "myPost",
+            element:<MyPost></MyPost>,
           },
       ] 
       },
