@@ -11,6 +11,8 @@ import PrivateProvider from "../providers/PrivateProvider";
 import MyProfile from "../dashboard/MyProfile";
 import MyPost from "../dashboard/MyPost";
 import AddPost from "../dashboard/AddPost";
+import MenageUsers from "../dashboard/admin/MenageUsers";
+import Announcements from "../dashboard/admin/Announcements";
 
 
 const router = createBrowserRouter([
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
           {
             path: "myPost",
             element:<MyPost></MyPost>,
+          },
+          {
+            path: "menageUsers",
+            element:<MenageUsers></MenageUsers>,
+          },
+          {
+            path: "announcements",
+            element:<Announcements></Announcements>,
           },
       ] 
       },

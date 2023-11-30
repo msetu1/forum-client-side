@@ -27,14 +27,16 @@ const Register = () => {
             };
             const res = await axiosPublic.post("/users", userInfo);
             console.log(res.data);
-            console.log("user profile info update");
-            reset();
-            Swal.fire({
-              title: "Success",
-              text: "User created successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
+            if(res.data.insertedId){
+              console.log("user profile info update");
+              reset();
+              Swal.fire({
+                title: "Success",
+                text: "User created successfully",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            }
           })
           .catch((error) => {
             console.error(error);
