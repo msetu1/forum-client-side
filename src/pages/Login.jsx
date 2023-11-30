@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
+import SocialLogin from "../components/others/SocialLogin";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -60,9 +61,7 @@ const Login = () => {
   };
   return (
    <div className="bg-[#ecfdf5] min-h-screen">
-    {/* <Helmet>
-        <title>Bistro Boss | Login</title>
-   </Helmet> */}
+   
     <div className="max-w-7xl mx-auto pt-20">
       <div className=" border border-black px-10 w-[500px] mx-auto  rounded-lg">
        <form onSubmit={handleSubmit} className="card-body">
@@ -114,6 +113,9 @@ const Login = () => {
               type="submit"
               value="Login"
             />
+          </div>
+          <div>
+            <SocialLogin></SocialLogin>
           </div>
           <div>
             <p className="text-center text-gray-600 text-xl">

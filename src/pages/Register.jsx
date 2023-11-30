@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import { Helmet } from "react-helmet-async";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../hooks/useAxiosPublic";
@@ -39,7 +38,7 @@ const Register = () => {
           })
           .catch((error) => {
             console.error(error);
-            Swal.fire({
+           Swal.fire({
               title: "Error!",
               text: "Something went wrong!!",
               icon: "error",
