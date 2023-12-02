@@ -9,10 +9,10 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateProvider from "../providers/PrivateProvider";
 import MyProfile from "../dashboard/MyProfile";
-import MyPost from "../dashboard/MyPost";
 import AddPost from "../dashboard/AddPost";
 import MenageUsers from "../dashboard/admin/MenageUsers";
 import Announcements from "../dashboard/admin/Announcements";
+import MyPosts from "../dashboard/MyPosts";
 
 
 const router = createBrowserRouter([
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
           },
           {
             path: "myPost",
-            element:<MyPost></MyPost>,
+            element:<MyPosts></MyPosts>,
           },
           {
             path: "menageUsers",
