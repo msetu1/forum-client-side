@@ -25,24 +25,9 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
-      <li className={`${user ? "hidden" : "block"}`}>
-        <NavLink
-          to="/membership"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-xl font-bold underline underline-offset-2 text-[#ea580c]"
-              : ""
-          }
-        >
-          Membership
-        </NavLink>
-      </li>
-
       <li className={`${user ? "block" : "hidden"}`}>
         <NavLink
-          to="/myAssignment"
+          to="/dashboard/myPost"
           className={({ isActive, isPending }) =>
             isPending
               ? "pending"
@@ -51,35 +36,7 @@ const Navbar = () => {
               : ""
           }
         >
-          My Assignments
-        </NavLink>
-      </li>
-      <li className={`${user ? "block" : "hidden"}`}>
-        <NavLink
-          to="/createAssignments"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-xl font-bold underline underline-offset-2 text-[#ea580c]"
-              : ""
-          }
-        >
-          Created
-        </NavLink>
-      </li>
-      <li className={`${user ? "block" : "hidden"}`}>
-        <NavLink
-          to="/icon"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-xl font-bold underline underline-offset-2 text-[#ea580c]"
-              : ""
-          }
-        >
-         Icon
+          My Posts
         </NavLink>
       </li>
       <li className={`${user ? "hidden" : "block"}`}>

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyPosts = () => {
   const { user } = useAuth();
@@ -94,8 +95,12 @@ const MyPosts = () => {
                 </td>
                 <td>{post.upVote}</td>
                 <td>{post.downVote}</td>
-                <button 
+              <Link
+              to={`/dashboard/comments/${post._id}`}
+              >
+              <button 
                 className="btn btn-ghost">Comment</button>
+              </Link>
               </tr>
             ))}
           </tbody>

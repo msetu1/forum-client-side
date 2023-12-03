@@ -13,7 +13,7 @@ import AddPost from "../dashboard/AddPost";
 import MenageUsers from "../dashboard/admin/MenageUsers";
 import Announcements from "../dashboard/admin/Announcements";
 import MyPosts from "../dashboard/MyPosts";
-
+import Comments from "../dashboard/Comments";
 
 const router = createBrowserRouter([
     {
@@ -64,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: "announcements",
             element:<Announcements></Announcements>,
+          },
+          {
+            path: "comments/:id",
+            element:<Comments></Comments>,
           },
       ] 
       },
